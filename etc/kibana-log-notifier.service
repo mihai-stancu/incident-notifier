@@ -3,15 +3,15 @@ Description=Kibana Log Notifier
 After=multi-user.target
 
 [Service]
-EnvironmentFile=/opt/kibana-log-notifier/.env
 Type=idle
 Restart=always
 RestartSec=30
 StartLimitInterval=200
 StartLimitBurst=5
 
-WorkingDirectory=/opt/kibana-log-notifier
-ExecStart=/bin/bash -c '/usr/bin/docker logs kib01 -f --tail=10 | /opt/kibana-log-notifier/bin/notifier'
+WorkingDirectory=$WORK_DIR
+EnvironmentFile=$ENV_FILE
+ExecStart=/bin/bash -c '/bin/tail -f -n10 ./doc/kibana_log.json | ./bin/notifier'
 
 [Install]
 WantedBy=multi-user.target
