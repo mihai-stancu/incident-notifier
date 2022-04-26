@@ -1,13 +1,16 @@
 #!/usr/bin/python3
 import docker
 import json
+import os
 import smtplib
 
-
-smtp_server = "smtp.test.org"
-recipients = ["marius.motea@test.org"]
-subject = "Alert from Kibana"
-sender_address = "elastic@test.org"
+smtp_host = os.getenv('MAIL_HOST')
+smtp_port = os.getenv('MAIL_PORT')
+smtp_user = os.getenv('MAIL_USER')
+smtp_pass = os.getenv('MAIL_PASS')
+recipients = os.getenv('MAIL_TO').split(',')
+subject = os.getenv('MAIL_SUBJECT')
+sender_address = os.getenv('MAIL_USER')
 
 def sendMail(TEXT):
     """this is some test documentation in the function"""
@@ -19,10 +22,13 @@ Subject: %s
 %s
 """ % (sender_address, ", ".join(recipients), subject, TEXT)
     # Send the mail
-    server = smtplib.SMTP(smtp_server)
-    server.sendmail(sender_address, recipients, message)
-    server.quit()
-
+    smtp = smtplib.SMTP(smtp_host, smtp_port)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.ehlo()
+    smtp.login(smtp_user, smtp_pass)
+    smtp.sendmail(smtp_user, recipients, message)
+    smtp.quit()
 
 client = docker.from_env()
 container = client.containers.get('kib01')
