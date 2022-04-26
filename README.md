@@ -1,2 +1,3 @@
-# Kibana-Notifier
-This service monitor the Kibana docker container for alert entries and send them on email address so you can have the alerts directly on email with free elasticsearch license.
+# Kibana Log Notifier
+
+Monitor the kibana logs from a docker container looking for alert entries and sending emails with the alert content. 

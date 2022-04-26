@@ -1,5 +1,5 @@
 [Unit]
-Description=Kibana Notifier
+Description=Kibana Log Notifier
 After=multi-user.target
 
 [Service]
@@ -9,8 +9,8 @@ RestartSec=30
 StartLimitInterval=200
 StartLimitBurst=5
 
-WorkingDirectory=/opt/kibana_notifier
-ExecStart=/opt/kibana_notifier/kibana_notifier.py
+WorkingDirectory=/opt/kibana-log-notifier
+ExecStart=/opt/kibana-log-notifier/kibana-log-notifier.py
 
 [Install]
 WantedBy=multi-user.target
