@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-import docker
+
 import json
 import os
 import smtplib
+import sys
 
 smtp_host = os.getenv('MAIL_HOST')
 smtp_port = os.getenv('MAIL_PORT')
@@ -30,10 +31,8 @@ Subject: %s
     smtp.sendmail(smtp_user, recipients, message)
     smtp.quit()
 
-client = docker.from_env()
-container = client.containers.get('kib01')
 
-for line in container.logs(stream=True, tail=10):
+for line in sys.stdin:
     record = json.loads(line)
     if record["type"] == "log" and "error" in record["tags"]:
         sendMail(record["message"])
