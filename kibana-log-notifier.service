@@ -3,6 +3,7 @@ Description=Kibana Log Notifier
 After=multi-user.target
 
 [Service]
+EnvironmentFile=/opt/kibana-log-notifier/.env
 Type=idle
 Restart=always
 RestartSec=30
