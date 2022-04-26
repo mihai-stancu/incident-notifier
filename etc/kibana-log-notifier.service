@@ -11,7 +11,7 @@ StartLimitInterval=200
 StartLimitBurst=5
 
 WorkingDirectory=/opt/kibana-log-notifier
-ExecStart=/bin/bash -c '/usr/bin/docker logs kib01 -f --tail=10 | /opt/kibana-log-notifier/kibana-log-notifier.py'
+ExecStart=/bin/bash -c '/usr/bin/docker logs kib01 -f --tail=10 | /opt/kibana-log-notifier/bin/notifier'
 
 [Install]
 WantedBy=multi-user.target
