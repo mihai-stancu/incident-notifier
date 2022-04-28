@@ -1,1 +1,1 @@
-{"type":"log","@timestamp":"2022-04-25T10:32:46+03:00","tags":["error","plugins","actions"],"pid":6,"message":"Server log: Test alert"}
+{"message":"Server log: restograf-web-all01-prod Message subject;Tags: kibana-log-notifier,handler:mail,handler:squadcast;Message body"}

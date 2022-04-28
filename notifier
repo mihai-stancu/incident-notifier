@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+import os
+import sys
+
+from src.Notification import Notification
+from src.Handlers.Mail import Mail
+from src.Handlers.SquadCast import SquadCast
+
+mailHandler = Mail(
+    os.getenv('MAIL_HOST'),
+    os.getenv('MAIL_PORT'),
+    os.getenv('MAIL_USER'),
+    os.getenv('MAIL_PASS'),
+    os.getenv('MAIL_TO').split(','),
+)
+sqHandler = SquadCast(os.getenv('SQUADCAST_TOKEN'))
+
+(
+Notification
+    .register("ifmsa-ex", "mail", mailHandler)
+    .register("ptak-njc", "mail", mailHandler)
+
+    .register("marley-wp", "squadcast", sqHandler)
+
+    .register("restograf-web", "mail", mailHandler.set_recipients(['mihai.stancu+test@neurony.ro']))
+)
+
+for line in sys.stdin:
+    Notification(line).handle()
