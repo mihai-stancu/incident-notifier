@@ -8,6 +8,7 @@ Restart=always
 RestartSec=30
 StartLimitInterval=200
 StartLimitBurst=5
+StandardOutput=/var/log/incident-notifier.log
 
 WorkingDirectory=$WORK_DIR
 EnvironmentFile=$ENV_FILE
