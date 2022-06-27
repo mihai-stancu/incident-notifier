@@ -19,7 +19,9 @@ class Incident:
         self.server = raw['server']
         self.rule = raw['rule']
         self.status = raw['status']
-        self.timestamp = raw['timestamp'].strftime('%Y-%m-%d %H:%M:%S %z')
+        self.timestamp = ''
+        if 'timestamp' in raw:
+            self.timestamp = raw['timestamp'].strftime('%Y-%m-%d %H:%M:%S %z')
         self.description = raw['description']
         self.project = "-".join(self.server.split('-')[:2])
 

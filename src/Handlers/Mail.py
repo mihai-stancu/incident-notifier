@@ -22,6 +22,9 @@ class Mail(Handler):
         self.to = to
 
     def send(self, incident):
+        if incident.status == 'Recovered':
+            return
+
         smtp = smtplib.SMTP(self.host, self.port)
         smtp.ehlo()
         smtp.starttls()

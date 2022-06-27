@@ -13,6 +13,9 @@ class SquadCast(Handler):
     # WebHook trigger
     #
     def send(self, incident):
+        if incident.status == 'Recovered':
+            return
+
         payload = SquadCast.__payload.copy()
         payload['message'] = str(incident)
         payload['description'] = incident.description

@@ -11,7 +11,7 @@ StartLimitBurst=5
 
 WorkingDirectory=$WORK_DIR
 EnvironmentFile=$ENV_FILE
-ExecStart=/bin/bash -c '$PRODUCER_COMMAND | ./bin/notifier'
+ExecStart=/bin/bash -c "$PRODUCER_COMMAND | ./bin/notifier"
 
 [Install]
 WantedBy=multi-user.target
