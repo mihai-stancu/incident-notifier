@@ -1,14 +1,14 @@
 import json
 import yaml
 
+from Handlers import Handler
+
 class Incident:
     __handlers = {}
 
     @staticmethod
-    def register(project, key, handler):
-        if project not in Incident.__handlers:
-            Incident.__handlers[project] = {}
-        Incident.__handlers[project][key] = handler
+    def register(project, handlers):
+        Incident.__handlers[project] = handlers
         return Incident
 
     def __init__(self, line):
@@ -35,10 +35,10 @@ class Incident:
             self.log("is unhandled")
             return
 
-        for key, handler in self.__handlers[self.project].items():
+        for handler in self.__handlers[self.project]:
             try:
-                handler.send(self)
-                self.log("was handled", key)
+                Handler.find(handler).send(self)
+                self.log("was handled", handler)
             except Exception as ex:
                 self.log("had an exception")
                 print(ex)

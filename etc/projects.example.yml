@@ -1,0 +1,7 @@
+project1:
+  - test1_squadcast
+  - test2_mail
+  - test3_discord
+
+project2:
+  - test3_discord

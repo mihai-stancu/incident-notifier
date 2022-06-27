@@ -1,5 +1,6 @@
 class Handler:
     __types = {}
+    __handlers = {}
 
     @staticmethod
     def register(type, constructor):
@@ -7,9 +8,14 @@ class Handler:
         return Handler
 
     @staticmethod
-    def create(type, args):
+    def create(name, type, args):
         constructor = Handler.__types[type]
-        return constructor(**args)
+        Handler.__handlers[name] = constructor(**args)
+        return Handler
+
+    @staticmethod
+    def find(name):
+        return Handler.__handlers[name]
 
     def send(self, incident):
         pass

@@ -2,6 +2,8 @@
 
 source .env;
 
+pip install bloom-filter;
+
 if [ -f /etc/systemd/system/multi-user.target.wants/incident-notifier.service ]; then
     systemctl stop incident-notifier.service
     systemctl disable incident-notifier.service

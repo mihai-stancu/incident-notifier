@@ -1,3 +1,4 @@
 etc/handlers.yml
+etc/projects.yml
 .env
 **/__pycache__/

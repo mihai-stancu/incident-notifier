@@ -1,15 +1,19 @@
 test1_squadcast:
   type: squadcast
-  projects: [test1-project]
   params:
     token: 0000000000000000000000000000000000000000
 
 test2_mail:
   type: mail
-  projects: [test2-project]
   params:
     host: example.com
     port: 587
     user: user@example.com
     cred: aaaaaaaaaaaaaaaa
     to: [test@example.com]
+
+test3_discord:
+  type: discord
+  params:
+    channel: 000000000000000000
+    token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
