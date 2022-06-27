@@ -1,14 +1,17 @@
 #!/bin/bash -ex
 
-if [ -f /etc/systemd/system/multi-user.target.wants/kibana-log-notifier.service ]; then
-    systemctl stop kibana-log-notifier.service
-    systemctl disable kibana-log-notifier.service
+source .env;
+
+if [ -f /etc/systemd/system/multi-user.target.wants/incident-notifier.service ]; then
+    systemctl stop incident-notifier.service
+    systemctl disable incident-notifier.service
 fi
 
 export WORK_DIR="$PWD/"
 export ENV_FILE="$PWD/.env"
-envsubst < etc/kibana-log-notifier.service > /lib/systemd/system/kibana-log-notifier.service
+export PRODUCER_COMMAND="$PRODUCER_COMMAND"
+envsubst < etc/incident-notifier.service > /lib/systemd/system/incident-notifier.service
 
 systemctl daemon-reload
-systemctl enable kibana-log-notifier.service
-systemctl start kibana-log-notifier.service
+systemctl enable incident-notifier.service
+systemctl start incident-notifier.service

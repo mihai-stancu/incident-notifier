@@ -1,5 +1,5 @@
 [Unit]
-Description=Kibana Log Notifier
+Description=Incident Notifier
 After=multi-user.target
 
 [Service]
@@ -11,7 +11,7 @@ StartLimitBurst=5
 
 WorkingDirectory=$WORK_DIR
 EnvironmentFile=$ENV_FILE
-ExecStart=/bin/bash -c '/bin/tail -f -n10 ./doc/kibana_log.json | ./bin/notifier'
+ExecStart=/bin/bash -c '$PRODUCER_COMMAND | ./bin/notifier'
 
 [Install]
 WantedBy=multi-user.target

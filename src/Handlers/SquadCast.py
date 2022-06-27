@@ -12,8 +12,8 @@ class SquadCast(Handler):
     #
     # WebHook trigger
     #
-    def send(self, message, description, tags):
+    def send(self, incident):
         payload = SquadCast.__payload.copy()
-        payload['message'] = message
-        payload['description'] = description
+        payload['message'] = str(incident)
+        payload['description'] = incident.description
         requests.post(SquadCast.__endpoint % self.token, json=payload)

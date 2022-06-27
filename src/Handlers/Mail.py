@@ -21,13 +21,13 @@ class Mail(Handler):
 
         self.to = to
 
-    def send(self, message, description, tags):
+    def send(self, incident):
         smtp = smtplib.SMTP(self.host, self.port)
         smtp.ehlo()
         smtp.starttls()
         smtp.ehlo()
         smtp.login(self.user, self.cred)
-        smtp.sendmail(self.user, self.to, self.__template % (self.user, message, description))
+        smtp.sendmail(self.user, self.to, self.__template % (self.user, incident, incident.description))
         smtp.quit()
 
     def set_recipients(self, recipients):

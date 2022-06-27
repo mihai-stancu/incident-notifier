@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+
+import sys
+sys.path.insert(0, "./src")
+import __init__
+
+from Incident import Incident
+
+for line in sys.stdin:
+    if line.strip() != "":
+        Incident(line).handle()
