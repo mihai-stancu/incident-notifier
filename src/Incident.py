@@ -16,11 +16,13 @@ class Incident:
 
         raw = yaml.safe_load(record['message'].replace(';', "\n"))
 
-        self.server = raw['server']
+        self.server = ''
+        if 'server' in raw and raw['server'] is not None:
+            self.server = raw['server']
         self.rule = raw['rule']
         self.status = raw['status']
         self.timestamp = ''
-        if 'timestamp' in raw:
+        if 'timestamp' in raw and raw['timestamp'] is not None:
             self.timestamp = raw['timestamp'].strftime('%Y-%m-%d %H:%M:%S %z')
         self.description = raw['description']
         self.project = "-".join(self.server.split('-')[:2])
