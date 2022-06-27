@@ -19,4 +19,4 @@ class Discord(Handler):
 
         payload = Discord.__payload.copy()
         payload['content'] = '**' + str(incident) + '**' + "\n" + incident.description
-        print(Discord.__endpoint % (self.channel, self.token), requests.post(Discord.__endpoint % (self.channel, self.token), json=payload))
+        requests.post(Discord.__endpoint % (self.channel, self.token), json=payload)
