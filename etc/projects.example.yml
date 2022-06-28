@@ -1,7 +1,9 @@
-project1:
-  - test1_squadcast
-  - test2_mail
-  - test3_discord
+default:
+  - test_mail
 
-project2:
-  - test3_discord
+aaaa-pppp:
+  - test_mail
+  - test_discord
+
+bbbb-pppp:
+  - test_squadcast

@@ -1,19 +1,19 @@
-test1_squadcast:
-  type: squadcast
-  params:
-    token: 0000000000000000000000000000000000000000
+test_discord:
+  type: discord
+  params: # you can obtain these parameters from a Discord webhook URL
+    channel: 000000000000000000
+    token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-test2_mail:
+test_mail:
   type: mail
   params:
     host: example.com
     port: 587
     user: user@example.com
-    cred: aaaaaaaaaaaaaaaa
-    to: [test@example.com]
+    cred: aaaaaaaaaaaaaaaa # the password
+    recipients: [test@example.com]
 
-test3_discord:
-  type: discord
-  params:
-    channel: 000000000000000000
-    token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+test_squadcast:
+  type: squadcast
+  params: # you can obtain this parameter from a SquadCast webhook URL
+    token: 0000000000000000000000000000000000000000
