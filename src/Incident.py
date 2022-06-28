@@ -5,6 +5,13 @@ from datetime import datetime
 from Handlers import Handler
 
 class Incident:
+    __statuses = {
+        'Alert': 'alert',
+        'Fired': 'alert',
+        'Uptime Down Monitor': 'alert',
+        'Recovered': 'recovered',
+    }
+
     __handlers = {}
 
     @staticmethod
@@ -18,25 +25,38 @@ class Incident:
         raw = yaml.safe_load(record['message'].replace(';', "\n"))
         raw = {k: (v if v is not None else '') for k, v in raw.items()}
 
-        self.server = raw['server'] or raw['id']
+        self.id = raw['id']
+        self.server = raw['server'] or '-'.join(raw['id'].replace('_', '-').split('-')[:4])
+        self.project = "-".join(self.server.split('-')[:2])
         self.rule = raw['rule']
-        self.status = raw['status']
+        self.status = Incident.__statuses[raw['status']] if raw['status'] in Incident.__statuses else 'alert'
         self.timestamp = raw['timestamp'] or datetime.now()
         self.description = raw['description']
-        self.project = "-".join(self.server.split('-')[:2])
 
-    def id(self):
-        return "%s.%s.%s" % (self.timestamp.strftime('%Y%m%d%H%M%S'), self.server, self.rule)
+    def format(self, format = ''):
+        return format.format(
+            id = self.id,
 
-    def __str__(self):
-        return " ".join([self.timestamp.strftime('%Y-%m-%d %H:%M:%S'), self.server, self.rule, self.status])
+            project = self.project,
+            server = self.server,
+
+            rule = self.rule,
+            status = self.status,
+
+            timestamp = self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            date = self.timestamp.strftime('%Y-%m-%d'),
+            time = self.timestamp.strftime('%H:%M:%S'),
+
+            description = self.description,
+
+         )
 
     def handle(self):
-        if not self.project in self.__handlers:
-            self.log("is unhandled")
-            return
+        handlers = self.__handlers['default']
+        if self.project in self.__handlers:
+            handlers = self.__handlers[self.project]
 
-        for handler in self.__handlers[self.project]:
+        for handler in handlers:
             try:
                 Handler.find(handler).send(self)
                 self.log("was handled", handler)
@@ -45,7 +65,8 @@ class Incident:
                 print(ex)
 
     def log(self, prefix, handler = None):
+        incident = self.format('{server} {rule} {status} {timestamp}')
+        msg = '{incident} {prefix}'.format(incident = incident, prefix = prefix)
         if handler is not None:
-            print("%s %s via %s" % (self, prefix, handler))
-        else:
-            print("%s %s" % (self, prefix))
+            msg += ' via ' + handler
+        print(msg)
