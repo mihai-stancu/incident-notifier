@@ -1,11 +1,12 @@
 import json
-import yaml
 
 from datetime import datetime
 from Handlers import Handler
 
 class Incident:
     __statuses = {
+        'alert': 'alert',
+        'recovered': 'recovered',
         'Alert': 'alert',
         'Fired': 'alert',
         'Uptime Down Monitor': 'alert',
@@ -20,9 +21,7 @@ class Incident:
         return Incident
 
     def __init__(self, line):
-        record = json.loads(line)
-
-        raw = yaml.safe_load(record['message'].replace(';', "\n"))
+        raw = json.loads(line)
         raw = {k: (v if v is not None else '') for k, v in raw.items()}
 
         self.id = raw['id']
@@ -30,7 +29,10 @@ class Incident:
         self.project = "-".join(self.server.split('-')[:2])
         self.rule = raw['rule']
         self.status = Incident.__statuses[raw['status']] if raw['status'] in Incident.__statuses else 'alert'
-        self.timestamp = raw['timestamp'] or datetime.now()
+        if raw['timestamp']:
+            self.timestamp = datetime.strptime(raw['timestamp'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        else:
+            self.timestamp = datetime.now()
         self.description = raw['description']
 
     def format(self, format = ''):
@@ -48,7 +50,6 @@ class Incident:
             time = self.timestamp.strftime('%H:%M:%S'),
 
             description = self.description,
-
          )
 
     def handle(self):

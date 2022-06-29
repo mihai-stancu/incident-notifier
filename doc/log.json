@@ -1,2 +1,8 @@
-{"type":"log","@timestamp":"2022-06-27T03:57:52+03:00","tags":["error","plugins","actions"],"pid":6,"message":"Server log: ###incident-notifier###;id: ifmsa-ex-www02-prod;timestamp: 2022-06-27T00:57:46.596Z;description: Memory usage is greater than a threshold of 80 (current value is 87.4%);server: ifmsa-ex-www02-prod;status: Alert;rule: res:RAM;"}
-{"type":"log","@timestamp":"2022-06-27T03:58:54+03:00","tags":["info","plugins","actions"],"pid":6,"message":"Server log: ###incident-notifier###;id: ifmsa-ex-www02-prod;timestamp: ;description: ;server: ;status: Recovered;rule: res:RAM;"}
+{"id":"bbbb_pppp_moni_prod","timestamp":"2022-06-27T00:57:46.596Z","description":"https://example.com/ is down","server":"bbbb-pppp-moni-prod","status":"alert","rule":"uptime"}
+{"id":"bbbb_pppp_moni_prod","timestamp":"2022-06-27T00:57:46.596Z","description":null,"server":null,"status":"recovered","rule":"uptime"}
+
+{"id":"aaaa-pppp-www01-prod","timestamp":"2022-06-27T00:57:46.596Z","description":"Memory usage is greater than a threshold of 80 (current value is 87.4%)","server":"aaaa-pppp-www01-prod","status":"alert","rule":"RAM usage"}
+{"id":"aaaa-pppp-www01-prod","timestamp":"2022-06-27T00:57:46.596Z","description":null,"server":null,"status":"recovered","rule":"RAM usage"}
+
+{"id":"aaaa-pppp-www02-prod","timestamp":"2022-06-27T00:57:46.596Z","description":"Disk usage is greater than a threshold of 80 (current value is 87.4%)","server":"aaaa-pppp-www02-prod","status":"alert","rule":"HDD usage"}
+{"id":"aaaa-pppp-www02-prod","timestamp":"2022-06-27T00:57:46.596Z","description":null,"server":null,"status":"recovered","rule":"HDD usage"}

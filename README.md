@@ -3,13 +3,33 @@
 Monitor incident logs and send notifications via SMTP, Discord, and SquadCast incident management.
 
 ### Installation:
-- specify how your logs are procured by defining `$PRODUCER_COMMAND` in your `.env` file
-- make sure your producer outputs JSON lines in the [incident format](#incident-format).
-- declare notification handlers for [Discord](#discord-handler), [Mail](#mail-handler), and/or [SquadCast](#squadcast-handler) in your `etc/handlers.yml`
-- define the default notification [handling behavior](#project-format) in `etc/projects.yml .default`
-- associate specific handlers [per project](#project-format) in `etc/projects.yml`
-- run `sudo bin/installer` to deploy as a systemd service
-- check the service is up & running `sudo systemctl status incident-notifier.service`
+- Specify how your logs are procured by defining `$PRODUCER_COMMAND` in your `.env` file
+- Make sure your producer outputs JSON lines in the [incident format](#incident-format).
+- Declare notification handlers for [Discord](#discord-handler), [Mail](#mail-handler), and/or [SquadCast](#squadcast-handler) in your `etc/handlers.yml`
+- Define the default notification [handling behavior](#project-format) in `etc/projects.yml .default`
+- Associate specific handlers [per project](#project-format) in `etc/projects.yml`
+- Run `sudo bin/installer` to deploy as a systemd service
+- Check the service is up & running `sudo systemctl status incident-notifier.service`
+
+### Usage with the "Kibana Server Log" connector
+- Create your alerting rules in Kibana.
+- Create actions for your rules with the "Server log" connector
+- Specify the message of the action to be:
+    > ```yaml
+    > ###this-can-be-an-arbitrary-value###
+    > id: {{alert.id}}
+    > timestamp: {{context.timestamp}}
+    > description: {{context.reason}}
+    > server: {{context.group}}
+    > status: {{alert.actionGroupName}}
+    > rule: {{rule.name}}
+    > ```
+- Defining `$PRODUCER_COMMAND` in your `.env` file as:
+    > ```bash
+    > KIBANA_LOG_TAG=this-can-be-an-arbitrary-value
+    > PRODUCER_COMMAND='tail -f -n100 /path/to/kibana.log | grep --line-buffered ${KIBANA_LOG_TAG@Q} | jq -rc ".message + \"---\"" | tr ";" "\n" | yq eval . -o=json -I0'
+    > ```
+- If your ELK is in Docker then you should replace `tail -f -n100 /path/to/kibana.log` with `docker logs -f --tail=100 $KIBANA_CONTAINER` 
 
 ### Expected formats
 
