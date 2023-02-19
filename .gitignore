@@ -1,4 +1,5 @@
 .idea/
+etc/aliases.yml
 etc/handlers.yml
 etc/projects.yml
 .env

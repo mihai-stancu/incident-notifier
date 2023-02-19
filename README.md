@@ -27,7 +27,7 @@ Monitor incident logs and send notifications via SMTP, Discord, and SquadCast in
 - Defining `$PRODUCER_COMMAND` in your `.env` file as:
     > ```bash
     > KIBANA_LOG_TAG=this-can-be-an-arbitrary-value
-    > PRODUCER_COMMAND='tail -f -n100 /path/to/kibana.log | grep --line-buffered ${KIBANA_LOG_TAG@Q} | jq -rc ".message + \"---\"" | tr ";" "\n" | yq eval . -o=json -I0'
+    > PRODUCER_COMMAND='tail -f -n100 /path/to/kibana.log | grep --line-buffered ${KIBANA_LOG_TAG@Q} | jq --unbuffered -rc ".message + \"---\"" | stdbuf -oL tr ";" "\n" | stdbuf -oL yq eval . -o=json -I0'
     > ```
 - If your ELK is in Docker then you should replace `tail -f -n100 /path/to/kibana.log` with `docker logs -f --tail=100 $KIBANA_CONTAINER` 
 

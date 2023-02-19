@@ -1,19 +1,17 @@
-test_discord:
-  type: discord
-  params: # you can obtain these parameters from a Discord webhook URL
-    channel: 000000000000000000
-    token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+debug: {type: debug}
 
-test_mail:
+# you can obtain these parameters from a Discord webhook URL
+discord:test: {type: discord,  params: {channel: 000000000000000000, token: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}}
+
+mail:default:
   type: mail
-  params:
+  params: &mail_config
     host: example.com
     port: 587
     user: user@example.com
     cred: aaaaaaaaaaaaaaaa # the password
-    recipients: [test@example.com]
+    recipients: []
+mail:test: {type: mail, params: {<<: *mail_config, recipients: [test@example.com]}}
 
-test_squadcast:
-  type: squadcast
-  params: # you can obtain this parameter from a SquadCast webhook URL
-    token: 0000000000000000000000000000000000000000
+# you can obtain this parameter from a SquadCast webhook URL
+squadcast:test: {type: squadcast, params: {token: 0000000000000000000000000000000000000000}}
